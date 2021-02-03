@@ -18,7 +18,9 @@ package lk.ac.mrt.cse.dbs.simpleexpensemanager.data;
 
 import java.util.List;
 
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InsufficientAccBalanceException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.SameAccountCreationException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
@@ -56,7 +58,7 @@ public interface AccountDAO {
      *
      * @param account - the account to be added.
      */
-    public void addAccount(Account account);
+    public void addAccount(Account account) throws SameAccountCreationException;
 
     /***
      * Remove an account from the accounts collection.
@@ -78,6 +80,6 @@ public interface AccountDAO {
      * @param amount      - amount involved
      * @throws InvalidAccountException - if the account number is invalid
      */
-    public void updateBalance(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException;
+    public void updateBalance(String accountNo, ExpenseType expenseType, double amount) throws InvalidAccountException, InsufficientAccBalanceException;
 
 }

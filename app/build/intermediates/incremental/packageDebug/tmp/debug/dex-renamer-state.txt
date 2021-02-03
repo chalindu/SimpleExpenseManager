@@ -1,0 +1,4 @@
+#Wed Feb 03 22:00:08 IST 2021
+base.0=D\:\\Aca Folders\\Semester 4\\3 Database Systems\\Sample Expense Manager\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

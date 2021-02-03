@@ -16,8 +16,10 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,9 @@ import android.widget.EditText;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.SameAccountCreationException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
 import static lk.ac.mrt.cse.dbs.simpleexpensemanager.Constants.EXPENSE_MANAGER;
 /**
@@ -95,8 +100,22 @@ public class AddAccountFragment extends Fragment implements View.OnClickListener
                 }
 
                 if (currentExpenseManager != null) {
-                    currentExpenseManager.addAccount(accountNumStr, bankNameStr, accountHolderStr,
-                            Double.parseDouble(initialBalanceStr));
+
+                    try {
+                        currentExpenseManager.addAccount(accountNumStr, bankNameStr, accountHolderStr,
+                                Double.parseDouble(initialBalanceStr));
+                    } catch (SameAccountCreationException e) {
+                        new AlertDialog.Builder(this.getActivity())
+                                .setTitle(this.getString(R.string.same_account_creation) + accountNumStr)
+                                .setMessage(e.getMessage())
+                                .setNeutralButton(this.getString(R.string.msg_ok),
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        }).setIcon(android.R.drawable.ic_dialog_alert).show();
+                    }
                 }
                 cleanUp();
                 break;
